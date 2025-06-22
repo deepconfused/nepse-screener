@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nepse Screener</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4f4f9; color: #333; }
+        .container { max-width: 900px; margin: 2rem auto; padding: 1rem; background: #fff; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #444; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #007bff; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        .positive { color: green; }
+        .negative { color: red; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Today's Share Price</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <th>LTP</th>
+                    <th>% Change</th>
+                    <th>Previous Close</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- This is where Python will insert the data -->
+                {% for stock in stocks %}
+                <tr>
+                    <td>{{ stock.Symbol }}</td>
+                    <td>{{ stock.LTP }}</td>
+                    
+                    <!-- Add logic for color based on change -->
+                    {% if stock.Change > 0 %}
+                        <td class="positive">{{ stock.ChangePercent }}%</td>
+                    {% elif stock.Change < 0 %}
+                        <td class="negative">{{ stock.ChangePercent }}%</td>
+                    {% else %}
+                        <td>{{ stock.ChangePercent }}%</td>
+                    {% endif %}
+
+                    <td>{{ stock.PreviousClose }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
